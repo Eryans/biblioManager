@@ -31,7 +31,7 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('/book/create', name: 'book_create')]
-    public function createBook(ManagerRegistry $registry,Request $request,EntityManagerInterface $event): Response
+    public function createBook(Request $request,EntityManagerInterface $event): Response
     {
         $book = new Book();
 
@@ -50,10 +50,10 @@ class BookController extends AbstractController
             'form' => $form
         ]);
     }
-    #[Route('/book/edit', name: 'book_edit')]
-    public function editBook(ManagerRegistry $registry,Request $request,EntityManagerInterface $event): Response
+    #[Route('/book/edit/{id}', name: 'book_edit')]
+    public function editBook(ManagerRegistry $registry,Request $request,EntityManagerInterface $event,int $id): Response
     {
-        $book = new Book();
+        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
 
         $form = $this->createForm(BookType::class,$book);
         $form->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]]);
@@ -66,8 +66,17 @@ class BookController extends AbstractController
         }
         
         return $this->renderForm('book/create.html.twig', [
-            'controller_name' => 'Create Book',
+            'controller_name' => 'Edit Book',
             'form' => $form
         ]);
+    }
+    #[Route('/book/delete/{id}', name: 'book_delete')]
+    public function deleteBook(ManagerRegistry $registry,EntityManagerInterface $event, int $id): Response
+    {
+        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
+        $book->setClient(null);
+        $event->remove($book);
+        $event->flush();
+        return $this->redirectToRoute("book_listing");
     }
 }
