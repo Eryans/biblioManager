@@ -36,7 +36,6 @@ class ClientController extends AbstractController
         $client = new Client();
 
         $form = $this->createForm(ClientType::class,$client);
-        $client->setAvailable(true);
         $form->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,7 +74,6 @@ class ClientController extends AbstractController
     public function deleteclient(ManagerRegistry $registry,EntityManagerInterface $event, int $id): Response
     {
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-        $client->setClient(null);
         $event->remove($client);
         $event->flush();
         return $this->redirectToRoute("client_listing");

@@ -6,6 +6,7 @@ use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ClientType extends AbstractType
 {
@@ -14,7 +15,7 @@ class ClientType extends AbstractType
         $builder
             ->add('first_name')
             ->add('last_name')
-            ->add('birth_date')
+            ->add('birth_date', DateType::class, ['widget' => 'single_text'])
             ->add('adress')
             ->add('city')
             ->add('mail')
