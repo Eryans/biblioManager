@@ -20,6 +20,8 @@
             <th>{{"Summary"|trans}}</th>
             <th>{{"release_date"|trans}}</th>
             <th>{{"Category"|trans}}</th>
+            <th>{{"forChild"|trans}}</th>
+            <th>{{"isTaken"|trans}}</th>
             <th>{{"Client"|trans}}</th>
             <th></th>
             <th></th>
@@ -32,6 +34,8 @@
                 <td>{{book.getSummary()}}</td>
                 <td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
                 <td>{{book.getCategory()}}</td>
+                <td>{% if book.getForChild() %} ᶘ ᵒᴥᵒᶅ {% else %} ( ͡° ͜ʖ ͡°) {% endif %}</td>
+                <td>{% if book.getAvailable() %} Available {% else %} Taken {% endif %}</td>
                 <td>{{book.getClient()}}</td>
                 <td><a class="btn btn-success" href="./edit/{{book.getId()}}">{{'Edit'|trans}}</a></td>
                 <td><a class="btn btn-danger" href="./delete/{{book.getId()}}"=>{{'Delete'|trans}}</a></td>

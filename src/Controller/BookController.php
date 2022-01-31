@@ -27,7 +27,7 @@ class BookController extends AbstractController
         $books = $registry->getRepository(Book::class)->findAll();
         return $this->render('book/listing.html.twig', [
             'controller_name' => 'BookController',
-            'books' => $books
+            'books' => $books,
         ]);
     }
     #[Route('/book/create', name: 'book_create')]
@@ -36,6 +36,7 @@ class BookController extends AbstractController
         $book = new Book();
 
         $form = $this->createForm(BookType::class,$book);
+        $book->setAvailable(true);
         $form->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
