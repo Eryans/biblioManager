@@ -11,6 +11,7 @@ use App\Form\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\SecurityBundle;
 
 class BookController extends AbstractController
 {
