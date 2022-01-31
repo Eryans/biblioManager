@@ -36,7 +36,6 @@ class ClientController extends AbstractController
         $client = new Client();
 
         $form = $this->createForm(ClientType::class,$client);
-        $client->setAvailable(true);
         $form->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
