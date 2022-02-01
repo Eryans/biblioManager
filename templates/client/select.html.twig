@@ -34,7 +34,11 @@
                 <td>{{client.getCity()}}</td>
                 <td>{{client.getMail()}}</td>
                 <td>{{client.getPhone()}}</td>
+                {% if book.getForChild() == false and client.isAdult() == false %}
+                <td><button class="btn btn-success disabled">{{'Select'|trans}}</a></td>
+                {% else %}
                 <td><a class="btn btn-success" href={{path("client_book_link",{idC:client.getId(), idB: app.request.get("id")}) }}>{{'Select'|trans}}</a></td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

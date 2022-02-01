@@ -45,12 +45,14 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
-    public function selectClient(ManagerRegistry $registry): Response
+    public function selectClient(ManagerRegistry $registry,int $id): Response
     {
+        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
         $clients = $registry->getRepository(Client::class)->findAll();
         return $this->render('client/select.html.twig', [
             'controller_name' => 'clientController',
             'clients' => $clients,
+            'book' => $book
         ]);
     }
     #[Route('/client/link/{idB},{idC}', name: 'client_book_link')]

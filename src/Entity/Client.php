@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -161,5 +162,10 @@ class Client
         $this->phone = $phone;
 
         return $this;
+    }
+    public function isAdult(): bool{
+        $now = new DateTime();
+        $age = date_diff($this->getBirthDate(),$now);
+        return $age->y >= 18 ? true : false;
     }
 }
