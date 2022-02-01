@@ -13,9 +13,8 @@
 
 <div class="example-wrapper">
     <h2>{{'Client'|trans}}</h2>
-    <table id="myTable" class="display">
+    <table id="" class="table">
         <thead>
-            <th></th>
             <th>{{"Firstname"|trans}}</th>
             <th>{{"Lastname"|trans}}</th>
             <th>{{"Birthdate"|trans}}</th>
@@ -23,11 +22,11 @@
             <th>{{"City"|trans}}</th>
             <th>{{"Email"|trans}}</th>
             <th>{{"Phone"|trans}}</th>
+            <th></th>
+            <th></th>
         </thead>
         <tbody>
-        {% for client in clients %}
             <tr>
-                <td><a class="btn btn-primary" href={{path("client_details", {id : client.getId()})}}>{{'Details'|trans}}</a></td>
                 <td>{{client.getFirstName()}}</td>
                 <td>{{client.getLastName()}}</td>
                 <td>{{client.getBirthDate().format("d-m-Y")}}</td>
@@ -35,11 +34,40 @@
                 <td>{{client.getCity()}}</td>
                 <td>{{client.getMail()}}</td>
                 <td>{{client.getPhone()}}</td>
+                <td><a class="btn btn-success" href="./edit/{{client.getId()}}">{{'Edit'|trans}}</a></td>
+                <td><a class="btn btn-danger" href="./delete/{{client.getId()}}"=>{{'Delete'|trans}}</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>{{'Borrowed book by'|trans}} {{client.getFirstName()}}</h2>
+    <table id="myTable" class="display">
+        <thead>
+            <th>{{"Title"|trans}}</th>
+            <th>{{"Author"|trans}}</th>
+            <th>{{"Summary"|trans}}</th>
+            <th>{{"release_date"|trans}}</th>
+            <th>{{"Category"|trans}}</th>
+            <th>{{"forChild"|trans}}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{book.getTitle()}}</td>
+                <td>{{book.getAuthor()}}</td>
+                <td>{{book.getSummary()}}</td>
+                <td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
+                <td>{{book.getCategory()}}</td>
+                <td>{% if book.getForChild() %} ᶘ ᵒᴥᵒᶅ {% else %} ( ͡° ͜ʖ ͡°) {% endif %}</td>
+                <td>
+                <a class="btn btn-primary" href={{path("client_book_unlink", {idB : book.getId(),idC : app.request.get("id")})}}>{{'Unborrow'|trans}}</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="./create"=>{{'Create client'|trans}}</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -59,6 +87,7 @@ $(document).ready(function() {
         }
         
     });
+    
 } );
 </script>
 {% endblock %}

@@ -15,7 +15,6 @@
     <h2>{{'Client'|trans}}</h2>
     <table id="myTable" class="display">
         <thead>
-            <th></th>
             <th>{{"Firstname"|trans}}</th>
             <th>{{"Lastname"|trans}}</th>
             <th>{{"Birthdate"|trans}}</th>
@@ -23,11 +22,11 @@
             <th>{{"City"|trans}}</th>
             <th>{{"Email"|trans}}</th>
             <th>{{"Phone"|trans}}</th>
+            <th></th>
         </thead>
         <tbody>
         {% for client in clients %}
             <tr>
-                <td><a class="btn btn-primary" href={{path("client_details", {id : client.getId()})}}>{{'Details'|trans}}</a></td>
                 <td>{{client.getFirstName()}}</td>
                 <td>{{client.getLastName()}}</td>
                 <td>{{client.getBirthDate().format("d-m-Y")}}</td>
@@ -35,11 +34,11 @@
                 <td>{{client.getCity()}}</td>
                 <td>{{client.getMail()}}</td>
                 <td>{{client.getPhone()}}</td>
+                <td><a class="btn btn-success" href={{path("client_book_link",{idC:client.getId(), idB: app.request.get("id")}) }}>{{'Select'|trans}}</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="./create"=>{{'Create client'|trans}}</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
