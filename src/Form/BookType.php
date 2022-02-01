@@ -21,7 +21,7 @@ class BookType extends AbstractType
             ->add('summary',TextAreaType::class,[])
             ->add('release_date',DateType::class, ['widget' => 'single_text'])
             ->add('category',TextType::class,[])
-            ->add('for_child',CheckboxType::class,[])
+            ->add('for_child',CheckboxType::class,['required' => false])
         ;
     }
 

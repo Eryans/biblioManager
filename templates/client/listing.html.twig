@@ -23,8 +23,6 @@
             <th>{{"City"|trans}}</th>
             <th>{{"Email"|trans}}</th>
             <th>{{"Phone"|trans}}</th>
-            <th></th>
-            <th></th>
         </thead>
         <tbody>
         {% for client in clients %}
@@ -37,8 +35,6 @@
                 <td>{{client.getCity()}}</td>
                 <td>{{client.getMail()}}</td>
                 <td>{{client.getPhone()}}</td>
-                <td><a class="btn btn-success" href="./edit/{{client.getId()}}">{{'Edit'|trans}}</a></td>
-                <td><a class="btn btn-danger" href="./delete/{{client.getId()}}"=>{{'Delete'|trans}}</a></td>
             </tr>
         {% endfor %}
         </tbody>
