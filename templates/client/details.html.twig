@@ -15,7 +15,6 @@
     <h2>{{'Client'|trans}}</h2>
     <table id="myTable" class="display">
         <thead>
-            <th></th>
             <th>{{"Firstname"|trans}}</th>
             <th>{{"Lastname"|trans}}</th>
             <th>{{"Birthdate"|trans}}</th>
@@ -27,9 +26,7 @@
             <th></th>
         </thead>
         <tbody>
-        {% for client in clients %}
             <tr>
-                <td><a class="btn btn-primary" href={{path("client_details", {id : client.getId()})}}>{{'Details'|trans}}</a></td>
                 <td>{{client.getFirstName()}}</td>
                 <td>{{client.getLastName()}}</td>
                 <td>{{client.getBirthDate().format("d-m-Y")}}</td>
@@ -40,10 +37,8 @@
                 <td><a class="btn btn-success" href="./edit/{{client.getId()}}">{{'Edit'|trans}}</a></td>
                 <td><a class="btn btn-danger" href="./delete/{{client.getId()}}"=>{{'Delete'|trans}}</a></td>
             </tr>
-        {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="./create"=>{{'Create client'|trans}}</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
