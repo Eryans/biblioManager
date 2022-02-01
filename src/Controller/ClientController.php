@@ -38,10 +38,10 @@ class ClientController extends AbstractController
     {
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
         $books = $registry->getRepository(Book::class)->findBy(["client" => $client]);
-        dump($books);
         return $this->render('client/details.html.twig', [
             'controller_name' => 'client Detail',
             'client' => $client,
+            'books' => $books
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
@@ -61,6 +61,18 @@ class ClientController extends AbstractController
         $book->setClient($client);
         $book->setAvailable(false);
         $client->addBook($book);
+        $event->persist($book,$client);
+        $event->flush();
+        return $this->redirectToRoute("book_listing");
+    }
+    #[Route('/client/unlink/{idB},{idC}', name: 'client_book_unlink')]
+    public function unlinkClientToBook(EntityManagerInterface $event,ManagerRegistry $registry,int $idB, int $idC): Response
+    {
+        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
+        $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
+        $book->setClient(null);
+        $book->setAvailable(true);
+        $client->removeBook($book);
         $event->persist($book,$client);
         $event->flush();
         return $this->redirectToRoute("book_listing");
