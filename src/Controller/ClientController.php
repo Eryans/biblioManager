@@ -7,8 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Client;
+use App\Entity\Book;
 use App\Form\ClientType;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,13 +25,34 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/listing', name: 'client_listing')]
-    public function showclients(ManagerRegistry $registry): Response
+    public function showClients(ManagerRegistry $registry): Response
     {
         $clients = $registry->getRepository(Client::class)->findAll();
         return $this->render('client/listing.html.twig', [
             'controller_name' => 'clientController',
             'clients' => $clients,
         ]);
+    }
+    #[Route('/client/select/{id}', name: 'client_select')]
+    public function selectClient(ManagerRegistry $registry): Response
+    {
+        $clients = $registry->getRepository(Client::class)->findAll();
+        return $this->render('client/select.html.twig', [
+            'controller_name' => 'clientController',
+            'clients' => $clients,
+        ]);
+    }
+    #[Route('/client/link/{idB},{idC}', name: 'client_book_link')]
+    public function linkClientToBook(EntityManagerInterface $event,ManagerRegistry $registry,int $idB, int $idC): Response
+    {
+        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
+        $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
+        $book->setClient($client);
+        $book->setAvailable(false);
+        $client->addBook($book);
+        $event->persist($book,$client);
+        $event->flush();
+        return $this->redirectToRoute("book_listing");
     }
     #[Route('/client/create', name: 'client_create')]
     public function createclient(Request $request,EntityManagerInterface $event): Response

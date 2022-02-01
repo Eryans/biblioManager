@@ -25,6 +25,7 @@
             <th>{{"Client"|trans}}</th>
             <th></th>
             <th></th>
+            <th></th>
         </thead>
         <tbody>
         {% for book in books %}
@@ -35,8 +36,15 @@
                 <td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
                 <td>{{book.getCategory()}}</td>
                 <td>{% if book.getForChild() %} ᶘ ᵒᴥᵒᶅ {% else %} ( ͡° ͜ʖ ͡°) {% endif %}</td>
-                <td>{% if book.getAvailable() %} Available {% else %} Taken {% endif %}</td>
-                <td>{{book.getClient()}}</td>
+                <td>{% if book.getAvailable() %} {{'Available'|trans}} {% else %} {{"Taken"|trans}} {% endif %}</td>
+                <td>{% if book.getClient() %}{{book.getClient().getFirstName}}{% endif %}</td>
+                <td>
+                {% if book.getAvailable() %}
+                <a class="btn btn-primary" href={{path("client_select", {"id" : book.getId()})}}>{{'Borrow'|trans}}</a>
+                {% else %}
+                <button class="btn btn-primary disabled">{{'Borrow'|trans}}</button>
+                {% endif %}
+                </td>
                 <td><a class="btn btn-success" href="./edit/{{book.getId()}}">{{'Edit'|trans}}</a></td>
                 <td><a class="btn btn-danger" href="./delete/{{book.getId()}}"=>{{'Delete'|trans}}</a></td>
             </tr>
