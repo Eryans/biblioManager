@@ -24,7 +24,9 @@
 				<th>{{"Client"|trans}}</th>
 				<th></th>
 				<th></th>
+				{% if is_granted('ROLE_ADMIN') %}
 				<th></th>
+				{% endif %}
 			</thead>
 			<tbody>
 				{% for book in books %}
@@ -63,14 +65,18 @@
 						<td>
 							<a class="btn btn-success" href="./edit/{{book.getId()}}">{{'Edit'|trans}}</a>
 						</td>
+						{% if is_granted('ROLE_ADMIN') %}
 						<td>
 							<a class="btn btn-danger" href="./delete/{{book.getId()}}"=>{{'Delete'|trans}}</a>
 						</td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-		<a class="btn btn-primary" href="./create"=>{{'Create book'|trans}}</a>
+		{% if is_granted('ROLE_ADMIN') %}
+			<a class="btn btn-primary" href="./create"=>{{'Create book'|trans}}</a>
+		{% endif %}
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

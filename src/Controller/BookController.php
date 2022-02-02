@@ -19,6 +19,7 @@ class BookController extends AbstractController
     #[Route('/book', name: 'book')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('book/index.html.twig', [
             'controller_name' => 'BookController',
         ]);
@@ -26,6 +27,7 @@ class BookController extends AbstractController
     #[Route('/book/listing', name: 'book_listing')]
     public function showBooks(ManagerRegistry $registry): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $books = $registry->getRepository(Book::class)->findAll();
         return $this->render('book/listing.html.twig', [
             'controller_name' => 'BookController',
@@ -35,6 +37,7 @@ class BookController extends AbstractController
     #[Route('/book/create', name: 'book_create')]
     public function createBook(Request $request,EntityManagerInterface $event): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $book = new Book();
 
         $form = $this->createForm(BookType::class,$book);
@@ -56,6 +59,7 @@ class BookController extends AbstractController
     #[Route('/book/edit/{id}', name: 'book_edit')]
     public function editBook(ManagerRegistry $registry,Request $request,EntityManagerInterface $event,int $id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
 
         $form = $this->createForm(BookType::class,$book);
@@ -76,6 +80,7 @@ class BookController extends AbstractController
     #[Route('/book/delete/{id}', name: 'book_delete')]
     public function deleteBook(ManagerRegistry $registry,EntityManagerInterface $event, int $id): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
         $history = $registry->getRepository(History::class)->findBy(["book" => $book]);
         foreach($history as $h){

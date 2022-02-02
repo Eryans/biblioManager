@@ -23,6 +23,7 @@ class ClientController extends AbstractController
     #[Route('/client', name: 'client')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('client/index.html.twig', [
             'controller_name' => 'clientController',
         ]);
@@ -30,6 +31,7 @@ class ClientController extends AbstractController
     #[Route('/client/listing', name: 'client_listing')]
     public function showClients(ManagerRegistry $registry): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $clients = $registry->getRepository(Client::class)->findAll();
         return $this->render('client/listing.html.twig', [
             'controller_name' => 'clientController',
@@ -39,6 +41,7 @@ class ClientController extends AbstractController
     #[Route('/client/details/{id}', name: 'client_details')]
     public function showClient(ManagerRegistry $registry, int $id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
         $books = $registry->getRepository(Book::class)->findBy(["client" => $client]);
         $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
@@ -52,6 +55,7 @@ class ClientController extends AbstractController
     #[Route('/client/select/{id}', name: 'client_select')]
     public function selectClient(ManagerRegistry $registry, int $id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
         $clients = $registry->getRepository(Client::class)->findAll();
         return $this->render('client/select.html.twig', [
@@ -63,6 +67,7 @@ class ClientController extends AbstractController
     #[Route('/client/link/{idB},{idC}', name: 'client_book_link')]
     public function linkClientToBook(EntityManagerInterface $event, ManagerRegistry $registry, int $idB, int $idC): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $doctrine = $registry->getManager();
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
@@ -82,6 +87,7 @@ class ClientController extends AbstractController
     #[Route('/client/unlink/{idB},{idC}', name: 'client_book_unlink')]
     public function unlinkClientToBook(EntityManagerInterface $event, ManagerRegistry $registry, int $idB, int $idC): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
         $history = $registry->getRepository(History::class)->findOneBy(["client" => $client, "book" => $book, "returned_date" => null]);
@@ -96,6 +102,7 @@ class ClientController extends AbstractController
     #[Route('/client/create', name: 'client_create')]
     public function createclient(Request $request, EntityManagerInterface $event): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $client = new Client();
 
         $form = $this->createForm(ClientType::class, $client);
@@ -116,6 +123,7 @@ class ClientController extends AbstractController
     #[Route('/client/edit/{id}', name: 'client_edit')]
     public function editClient(ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
 
         $form = $this->createForm(ClientType::class, $client);
@@ -136,6 +144,7 @@ class ClientController extends AbstractController
     #[Route('/client/delete/{id}', name: 'client_delete')]
     public function deleteClient(ManagerRegistry $registry, EntityManagerInterface $event, $id): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]); 
         if (count($client->getBooks()) === 0){
             $history = $registry->getRepository(History::class)->findBy(["client" => $client]);

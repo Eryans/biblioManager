@@ -39,7 +39,9 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="./create"=>{{'Create client'|trans}}</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-primary" href="./create"=>{{'Create client'|trans}}</a>
+        {% endif %}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -35,10 +35,12 @@
                 <td>{{client.getMail()}}</td>
                 <td>{{client.getPhone()}}</td>
                 <td><a class="btn btn-success" href={{path("client_edit",{id: client.getId()})}}>{{'Edit'|trans}}</a></td>
-                {% if client.getBooks()|length != 0 %}
-                <td><button class="btn btn-danger disabled">{{'Delete'|trans}}</button></td>
-                {% else %}
-                <td><a class="btn btn-danger" href={{path("client_delete",{id: client.getId()})}}>{{'Delete'|trans}}</a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if client.getBooks()|length != 0 %}
+                    <td><button class="btn btn-danger disabled">{{'Delete'|trans}}</button></td>
+                    {% else %}
+                    <td><a class="btn btn-danger" href={{path("client_delete",{id: client.getId()})}}>{{'Delete'|trans}}</a></td>
+                    {% endif %}
                 {% endif %}
             </tr>
         </tbody>
