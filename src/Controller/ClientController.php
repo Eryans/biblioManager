@@ -43,13 +43,13 @@ class ClientController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-        $books = $registry->getRepository(Book::class)->findBy(["client" => $client]);
+        $Borrowedhistory = $registry->getRepository(History::class)->findBy(["client" => $client,"returned_date" => null]);
         $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
         return $this->render('client/details.html.twig', [
             'controller_name' => 'client Detail',
             'client' => $client,
-            'books' => $books,
-            'histories' => $history
+            'histories' => $history,
+            'bookHist' => $Borrowedhistory
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
@@ -75,8 +75,8 @@ class ClientController extends AbstractController
         $history->setClient($client);
         $history->setBook($book);
         $history->setBorrowDate(new DateTime("now"));
-        $book->setClient($client);
-        $book->setAvailable(false);
+        //$book->setClient($client);
+        $book->setQuantity($book->getQuantity() - 1);
         $client->addBook($book);
         $doctrine->persist($history);
         $event->persist($book, $client);
@@ -92,8 +92,8 @@ class ClientController extends AbstractController
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
         $history = $registry->getRepository(History::class)->findOneBy(["client" => $client, "book" => $book, "returned_date" => null]);
         $history->setReturnedDate(new DateTime("now"));
-        $book->setClient(null);
-        $book->setAvailable(true);
+        $book->setQuantity($book->getQuantity() + 1);
+        //$book->setClient(null);
         $client->removeBook($book);
         $event->persist($book, $client, $history);
         $event->flush();

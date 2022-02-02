@@ -59,16 +59,16 @@
             <th></th>
         </thead>
         <tbody>
-        {% for book in books %}
+        {% for book in bookHist %}
             <tr>
-                <td>{{book.getTitle()}}</td>
-                <td>{{book.getAuthor()}}</td>
-                <td>{{book.getSummary()}}</td>
-                <td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
-                <td>{{book.getCategory()}}</td>
-                <td>{% if book.getForChild() %} ᶘ ᵒᴥᵒᶅ {% else %} ( ͡° ͜ʖ ͡°) {% endif %}</td>
+                <td>{{book.getBook().getTitle()}}</td>
+                <td>{{book.getBook().getAuthor()}}</td>
+                <td>{{book.getBook().getSummary()}}</td>
+                <td>{{book.getBook().getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
+                <td>{{book.getBook().getCategory()}}</td>
+                <td>{% if book.getBook().getForChild() %} ᶘ ᵒᴥᵒᶅ {% else %} ( ͡° ͜ʖ ͡°) {% endif %}</td>
                 <td>
-                <a class="btn btn-primary" href={{path("client_book_unlink", {idB : book.getId(),idC : app.request.get("id")})}}>{{'Unborrow'|trans}}</a>
+                <a class="btn btn-primary" href={{path("client_book_unlink", {idB : book.getBook().getId(),idC : app.request.get("id")})}}>{{'Unborrow'|trans}}</a>
                 </td>
             </tr>
         {% endfor %}

@@ -60,10 +60,7 @@ class Client
 
     public function addBook(Book $book): self
     {
-        if (!$this->books->contains($book)) {
-            $this->books[] = $book;
-            $book->setClient($this);
-        }
+        $this->books[] = $book;
 
         return $this;
     }
@@ -163,9 +160,10 @@ class Client
 
         return $this;
     }
-    public function isAdult(): bool{
+    public function isAdult(): bool
+    {
         $now = new DateTime();
-        $age = date_diff($this->getBirthDate(),$now);
+        $age = date_diff($this->getBirthDate(), $now);
         return $age->y >= 18 ? true : false;
     }
 }

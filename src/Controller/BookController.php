@@ -34,6 +34,8 @@ class BookController extends AbstractController
             'books' => $books,
         ]);
     }
+
+
     #[Route('/book/create', name: 'book_create')]
     public function createBook(Request $request,EntityManagerInterface $event): Response
     {
@@ -91,5 +93,18 @@ class BookController extends AbstractController
         $event->remove($book);
         $event->flush();
         return $this->redirectToRoute("book_listing");
+    }
+
+    #[Route('/book/details/{id}', name: 'book_details')]
+    public function showBookDetails(ManagerRegistry $registry, int $id): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
+        $bookHistory = $registry->getRepository(History::class)->findBy(["book" => $book,"returned_date" => null]);
+        return $this->render('book/details.html.twig', [
+            'controller_name' => 'BookController',
+            'book' => $book,
+            'clients' => $bookHistory
+        ]);
     }
 }

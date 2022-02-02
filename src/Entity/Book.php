@@ -38,6 +38,9 @@ class Book
     #[ORM\ManyToOne(targetEntity: client::class, inversedBy: 'books')]
     private $client;
 
+    #[ORM\Column(type: 'integer')]
+    private $quantity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Book
     public function setClient(?client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
