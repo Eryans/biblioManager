@@ -68,6 +68,29 @@
         {% endfor %}
         </tbody>
     </table>
+     <h2>{{'Book history'|trans}}</h2>
+    <table id="" class="table">
+        <thead>
+            <th>{{"Title"|trans}}</th>
+            <th>{{"Author"|trans}}</th>
+            <th>{{"Borrowed date"|trans}}</th>
+            <th>{{"Returned date"|trans}}</th>
+        </thead>
+        <tbody>
+            {% for history in histories %}
+            <tr>
+                <td>{{history.getBook.getTitle()}}</td>
+                <td>{{history.getBook.getAuthor()}}</td>
+                <td>{{history.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
+                {% if history.getReturnedDate() %}
+                <td>{{history.getReturnedDate()|date("d-M-Y H:i:s")}}</td>
+                {% else %}
+                <td> Not returned </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

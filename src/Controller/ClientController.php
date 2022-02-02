@@ -8,10 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Client;
 use App\Entity\Book;
+use App\Entity\History;
 use App\Form\ClientType;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
+use ErrorException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,10 +41,12 @@ class ClientController extends AbstractController
     {
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
         $books = $registry->getRepository(Book::class)->findBy(["client" => $client]);
+        $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
         return $this->render('client/details.html.twig', [
             'controller_name' => 'client Detail',
             'client' => $client,
-            'books' => $books
+            'books' => $books,
+            'histories' => $history
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
@@ -52,18 +57,25 @@ class ClientController extends AbstractController
         return $this->render('client/select.html.twig', [
             'controller_name' => 'clientController',
             'clients' => $clients,
-            'book' => $book
+            'book' => $book,
         ]);
     }
     #[Route('/client/link/{idB},{idC}', name: 'client_book_link')]
     public function linkClientToBook(EntityManagerInterface $event, ManagerRegistry $registry, int $idB, int $idC): Response
     {
+        $doctrine = $registry->getManager();
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
+        $history = new History();
+        $history->setClient($client);
+        $history->setBook($book);
+        $history->setBorrowDate(new DateTime("now"));
         $book->setClient($client);
         $book->setAvailable(false);
         $client->addBook($book);
+        $doctrine->persist($history);
         $event->persist($book, $client);
+        $doctrine->flush();
         $event->flush();
         return $this->redirectToRoute("book_listing");
     }
@@ -72,10 +84,12 @@ class ClientController extends AbstractController
     {
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
+        $history = $registry->getRepository(History::class)->findOneBy(["client" => $client,"book" => $book, "returned_date" => null]);
+        $history->setReturnedDate(new DateTime("now"));
         $book->setClient(null);
         $book->setAvailable(true);
         $client->removeBook($book);
-        $event->persist($book, $client);
+        $event->persist($book, $client, $history);
         $event->flush();
         return $this->redirectToRoute("client_details", ["id" => $client->getId()]);
     }
