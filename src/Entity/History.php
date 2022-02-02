@@ -37,7 +37,7 @@ class History
         return $this->client;
     }
 
-    public function setClient(Client $client): self
+    public function setClient(?Client $client): self
     {
         $this->client = $client;
 
@@ -49,7 +49,7 @@ class History
         return $this->book;
     }
 
-    public function setBook(Book $book): self
+    public function setBook(?Book $book): self
     {
         $this->book = $book;
 

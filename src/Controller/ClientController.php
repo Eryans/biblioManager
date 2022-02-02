@@ -50,7 +50,7 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
-    public function selectClient(ManagerRegistry $registry,int $id): Response
+    public function selectClient(ManagerRegistry $registry, int $id): Response
     {
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
         $clients = $registry->getRepository(Client::class)->findAll();
@@ -84,7 +84,7 @@ class ClientController extends AbstractController
     {
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
-        $history = $registry->getRepository(History::class)->findOneBy(["client" => $client,"book" => $book, "returned_date" => null]);
+        $history = $registry->getRepository(History::class)->findOneBy(["client" => $client, "book" => $book, "returned_date" => null]);
         $history->setReturnedDate(new DateTime("now"));
         $book->setClient(null);
         $book->setAvailable(true);
@@ -114,7 +114,7 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/edit/{id}', name: 'client_edit')]
-    public function editclient(ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
+    public function editClient(ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
     {
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
 
@@ -134,11 +134,18 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/delete/{id}', name: 'client_delete')]
-    public function deleteclient(ManagerRegistry $registry, EntityManagerInterface $event, int $id): Response
+    public function deleteClient(ManagerRegistry $registry, EntityManagerInterface $event, $id): Response
     {
-        $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-        $event->remove($client);
-        $event->flush();
+        $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]); 
+        if (count($client->getBooks()) === 0){
+            $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
+            foreach ($history as $h) {
+                $h->setBook(null);
+                $event->remove($h);
+            }
+            $event->remove($client);
+            $event->flush();
+        }
         return $this->redirectToRoute("client_listing");
     }
 }

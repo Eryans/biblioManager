@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Book;
+use App\Entity\History;
 use App\Form\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -76,6 +77,11 @@ class BookController extends AbstractController
     public function deleteBook(ManagerRegistry $registry,EntityManagerInterface $event, int $id): Response
     {
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
+        $history = $registry->getRepository(History::class)->findBy(["book" => $book]);
+        foreach($history as $h){
+            $h->setClient(null);
+            $event->remove($h);
+        }
         $book->setClient(null);
         $event->remove($book);
         $event->flush();
