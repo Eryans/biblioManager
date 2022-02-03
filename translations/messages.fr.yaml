@@ -1,0 +1,30 @@
+Quantity: Quantité
+Title: Titre
+Author: Auteur
+Summary: Résumé
+release_date: Date de parution
+Category: Catégorie
+forChild: "+18 ans"
+isTaken: Disponible 
+Edit: Modifier
+Delete: Supprimer
+Borrow: Emprunter
+Details: Détails
+Create book: Ajouter un livre
+Book: Livres
+
+Client: Clients
+Firstname: Prénom
+Lastname: Nom
+Birthdate: Date de naissance
+Adress: Adresse
+City: Ville
+Email: Email
+Phone: Téléphone
+Create client: Ajouter un nouveau client
+
+Borrowed book by: Livres empruntés par
+Borrowed date: Date d'emprunt
+Returned date: Date de retour
+Book history: Historique d'emprunt
+Unborrow: Rendre

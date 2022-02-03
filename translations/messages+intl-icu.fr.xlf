@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="AwcPbFF" resname="Client list">
+        <source>Client list</source>
+        <target>__Client list</target>
+      </trans-unit>
+      <trans-unit id="DHf_Cas" resname="Client">
+        <source>Client</source>
+        <target>__Client</target>
+      </trans-unit>
+      <trans-unit id="ZHz6kbI" resname="Firstname">
+        <source>Firstname</source>
+        <target>__Firstname</target>
+      </trans-unit>
+      <trans-unit id="htiPHRy" resname="Lastname">
+        <source>Lastname</source>
+        <target>__Lastname</target>
+      </trans-unit>
+      <trans-unit id="WXzoaGl" resname="Birthdate">
+        <source>Birthdate</source>
+        <target>__Birthdate</target>
+      </trans-unit>
+      <trans-unit id="PN..9Ga" resname="Adress">
+        <source>Adress</source>
+        <target>__Adress</target>
+      </trans-unit>
+      <trans-unit id=".DP3Mkb" resname="City">
+        <source>City</source>
+        <target>__City</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>__Email</target>
+      </trans-unit>
+      <trans-unit id="Y9zriAC" resname="Phone">
+        <source>Phone</source>
+        <target>__Phone</target>
+      </trans-unit>
+      <trans-unit id="RkxP.QG" resname="Edit">
+        <source>Edit</source>
+        <target>__Edit</target>
+      </trans-unit>
+      <trans-unit id="4tClSWj" resname="Delete">
+        <source>Delete</source>
+        <target>__Delete</target>
+      </trans-unit>
+      <trans-unit id="0y2v8PF" resname="Borrowed book by">
+        <source>Borrowed book by</source>
+        <target>__Borrowed book by</target>
+      </trans-unit>
+      <trans-unit id="fozSBW2" resname="Title">
+        <source>Title</source>
+        <target>__Title</target>
+      </trans-unit>
+      <trans-unit id="2VCCou5" resname="Author">
+        <source>Author</source>
+        <target>__Author</target>
+      </trans-unit>
+      <trans-unit id="jnapSsg" resname="Summary">
+        <source>Summary</source>
+        <target>__Summary</target>
+      </trans-unit>
+      <trans-unit id="46jdcrG" resname="release_date">
+        <source>release_date</source>
+        <target>__release_date</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>__Category</target>
+      </trans-unit>
+      <trans-unit id="hPVRYKu" resname="forChild">
+        <source>forChild</source>
+        <target>__forChild</target>
+      </trans-unit>
+      <trans-unit id="k2UnXJF" resname="Unborrow">
+        <source>Unborrow</source>
+        <target>__Unborrow</target>
+      </trans-unit>
+      <trans-unit id="pohZI3i" resname="Book history">
+        <source>Book history</source>
+        <target>__Book history</target>
+      </trans-unit>
+      <trans-unit id="JqenH4W" resname="Borrowed date">
+        <source>Borrowed date</source>
+        <target>__Borrowed date</target>
+      </trans-unit>
+      <trans-unit id="9CHzVpJ" resname="Returned date">
+        <source>Returned date</source>
+        <target>__Returned date</target>
+      </trans-unit>
+      <trans-unit id="RZid5J_" resname="Details">
+        <source>Details</source>
+        <target>__Details</target>
+      </trans-unit>
+      <trans-unit id="zcDh_Yu" resname="Create client">
+        <source>Create client</source>
+        <target>__Create client</target>
+      </trans-unit>
+      <trans-unit id="KngCXea" resname="Select">
+        <source>Select</source>
+        <target>__Select</target>
+      </trans-unit>
+      <trans-unit id="kZbz5wN" resname="Book list">
+        <source>Book list</source>
+        <target>__Book list</target>
+      </trans-unit>
+      <trans-unit id="kJy4ESf" resname="Book">
+        <source>Book</source>
+        <target>__Book</target>
+      </trans-unit>
+      <trans-unit id="giurjUG" resname="Quantity">
+        <source>Quantity</source>
+        <target>__Quantity</target>
+      </trans-unit>
+      <trans-unit id="59Icxb3" resname="isTaken">
+        <source>isTaken</source>
+        <target>__isTaken</target>
+      </trans-unit>
+      <trans-unit id="A.LV2mw" resname="Current borrowing client">
+        <source>Current borrowing client</source>
+        <target>__Current borrowing client</target>
+      </trans-unit>
+      <trans-unit id="5nREczf" resname="Available">
+        <source>Available</source>
+        <target>__Available</target>
+      </trans-unit>
+      <trans-unit id="x25nkLx" resname="Taken">
+        <source>Taken</source>
+        <target>__Taken</target>
+      </trans-unit>
+      <trans-unit id="Lt_xaLO" resname="Borrow">
+        <source>Borrow</source>
+        <target>__Borrow</target>
+      </trans-unit>
+      <trans-unit id="hpbkWbQ" resname="Create book">
+        <source>Create book</source>
+        <target>__Create book</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

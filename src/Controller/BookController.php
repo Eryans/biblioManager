@@ -25,13 +25,18 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('/book/listing', name: 'book_listing')]
-    public function showBooks(ManagerRegistry $registry): Response
+    public function showBooks(ManagerRegistry $registry,Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $locale = $request->getLocale();
+        if ($locale === "fr"){
+            $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/fr_fr.json';
+        }
         $books = $registry->getRepository(Book::class)->findAll();
         return $this->render('book/listing.html.twig', [
             'controller_name' => 'BookController',
             'books' => $books,
+            'language' => $language
         ]);
     }
 
@@ -44,7 +49,7 @@ class BookController extends AbstractController
 
         $form = $this->createForm(BookType::class,$book);
         $book->setAvailable(true);
-        $form->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]]);
+        $form->add("submit", SubmitType::class,["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $book = $form->getData();

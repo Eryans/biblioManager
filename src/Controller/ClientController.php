@@ -29,13 +29,18 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/listing', name: 'client_listing')]
-    public function showClients(ManagerRegistry $registry): Response
+    public function showClients(Request $request,ManagerRegistry $registry): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $locale = $request->getLocale();
+        if ($locale === "fr"){
+            $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/fr_fr.json';
+        }
         $clients = $registry->getRepository(Client::class)->findAll();
         return $this->render('client/listing.html.twig', [
             'controller_name' => 'clientController',
             'clients' => $clients,
+            'language' => $language
         ]);
     }
     #[Route('/client/details/{id}', name: 'client_details')]
