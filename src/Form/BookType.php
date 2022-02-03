@@ -19,9 +19,9 @@ class BookType extends AbstractType
             ->add('title',TextType::class,["label" => "Title"])
             ->add('author',TextType::class,[])
             ->add('summary',TextAreaType::class,[])
-            ->add('release_date',DateType::class, ['widget' => 'single_text'])
+            ->add('release_date',DateType::class, ['widget' => 'single_text',"label" => "release_date"])
             ->add('category',TextType::class,[])
-            ->add('for_child',CheckboxType::class,['required' => false])
+            ->add('for_child',CheckboxType::class,['required' => false, 'label' => 'forChild'])
         ;
     }
 

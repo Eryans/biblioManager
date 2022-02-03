@@ -17,6 +17,8 @@ use Doctrine\ORM\Mapping\Entity;
 use ErrorException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ClientController extends AbstractController
 {
@@ -105,13 +107,12 @@ class ClientController extends AbstractController
         return $this->redirectToRoute("client_details", ["id" => $client->getId()]);
     }
     #[Route('/client/create', name: 'client_create')]
-    public function createclient(Request $request, EntityManagerInterface $event): Response
+    public function createclient(TranslatorInterface $translator,Request $request, EntityManagerInterface $event): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $client = new Client();
-
+        $title = $translator->trans("Create Client");
         $form = $this->createForm(ClientType::class, $client);
-        $form->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $client = $form->getData();
@@ -122,17 +123,17 @@ class ClientController extends AbstractController
 
         return $this->renderForm('client/create.html.twig', [
             'controller_name' => 'Create client',
-            'form' => $form
+            'form' => $form,
+            'title' => $title
         ]);
     }
     #[Route('/client/edit/{id}', name: 'client_edit')]
-    public function editClient(ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
+    public function editClient(TranslatorInterface $translator,ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-
+        $title = $translator->trans("Edit Client");
         $form = $this->createForm(ClientType::class, $client);
-        $form->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $client = $form->getData();
@@ -143,7 +144,8 @@ class ClientController extends AbstractController
 
         return $this->renderForm('client/create.html.twig', [
             'controller_name' => 'Edit client',
-            'form' => $form
+            'form' => $form,
+            'title' => $title
         ]);
     }
     #[Route('/client/delete/{id}', name: 'client_delete')]

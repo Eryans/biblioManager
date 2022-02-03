@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BookController!
+{% block title %}
+{{title}}
 {% endblock %}
 
 {% block body %}
@@ -18,7 +19,7 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>{{ controller_name }}!</h1>
+		<h1>{{ title }}</h1>
 		{{ form(form) }}
 
 		</div>

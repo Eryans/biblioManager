@@ -44,11 +44,11 @@
 							{% endif %}
 						</td>
 						<td>
-							<a class="btn btn-success" href="./edit/{{book.getId()}}">{{'Edit'|trans}}</a>
+							<a class="btn btn-success" href={{path("book_edit",{id:book.getId()})}}>{{'Edit'|trans}}</a>
 						</td>
 						{% if is_granted('ROLE_ADMIN') %}
 						<td>
-							<a class="btn btn-danger" href="./delete/{{book.getId()}}"=>{{'Delete'|trans}}</a>
+							<a class="btn btn-danger" href={{path("book_delete",{id:book.getId()})}}=>{{'Delete'|trans}}</a>
 						</td>
 						{% endif %}
 					</tr>
@@ -58,9 +58,9 @@
     <h2>{{'Current borrowing client'|trans}}</h2>
     <table id="" class="table">
         <thead>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Borrowed Date</th>
+            <th>{{"Firstname"|trans}}</th>
+            <th>{{"Lastname"|trans}}</th>
+            <th>{{"Borrowed date"|trans}}</th>
         </thead>
         <tbody id="tableBody">
             {% for client in clients %}

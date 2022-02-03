@@ -22,9 +22,26 @@ City: Ville
 Email: Email
 Phone: Téléphone
 Create client: Ajouter un nouveau client
+Mail: Email
 
 Borrowed book by: Livres empruntés par
 Borrowed date: Date d'emprunt
 Returned date: Date de retour
 Book history: Historique d'emprunt
 Unborrow: Rendre
+
+Edit Client: Modifier info client
+Create Client: Ajouter un nouveau client
+Submit: Confirmer
+
+Logout: Deconnexion
+
+Current borrowing client: Actuellement emprunté par
+
+Edit book: Modifier info livre
+Library: BiblioManager
+App Symfony: Une Appli Symfony
+
+Home: Accueil
+Books: Livres
+Clients: Clients

@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class ClientType extends AbstractType
@@ -22,7 +23,8 @@ class ClientType extends AbstractType
             ->add('city',TextType::class)
             ->add('mail',TextType::class)
             ->add('phone',TextType::class)
-        ;
+            ->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
