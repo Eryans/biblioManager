@@ -9,11 +9,17 @@
 {% endblock %}
 
 {% block body %}
-
-	<div class="example-wrapper">
+	<style>
+	.example-wrapper{
+		background: rgba(0,0,0,0.4);
+		border-radius: 5px;
+	}
+	</style>
+	<div class="example-wrapper text-white p-4 border-5">
 		<h2>{{'Book'|trans}}</h2>
-		<table id="myTable" width="100%">
+		<table id="myTable" class="text-white" width="100%">
 			<thead>
+				<th></th>
 				<th></th>
 				<th width="20%">{{"Title"|trans}}</th>
 				<th>{{"Author"|trans}}</th>
@@ -28,9 +34,10 @@
 				<th data-priority="1"></th>
 				{% endif %}
 			</thead>
-			<tbody id="tableBody">
+			<tbody id="tableBody" class="text-dark">
 				{% for book in books %}
 					<tr id="tableBodyRow">
+						<td></td>
 						<td><a class="btn btn-primary" href={{path("book_details", {"id" : book.getId()} )}}>{{'Details'|trans}}</a></td>
 						<td class="text-center">{{book.getTitle()}}</td>
 						<td class="text-center">{{book.getAuthor()}}</td>

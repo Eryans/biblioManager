@@ -11,22 +11,22 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
+<div class="container text-white">
     <h2>{{'Client'|trans}}</h2>
     {{form(form)}}
     <br>
     <table id="myTable" class="display">
         <thead>
-            <th>{{"Firstname"|trans}}</th>
-            <th>{{"Lastname"|trans}}</th>
+            <th data-priority="1">{{"Firstname"|trans}}</th>
+            <th data-priority="1">{{"Lastname"|trans}}</th>
             <th>{{"Birthdate"|trans}}</th>
             <th>{{"Adress"|trans}}</th>
             <th>{{"City"|trans}}</th>
             <th>{{"Email"|trans}}</th>
             <th>{{"Phone"|trans}}</th>
-            <th></th>
+            <th data-priority="1"></th>
         </thead>
-        <tbody>
+        <tbody class="text-dark">
         {% for client in clients %}
             <tr>
                 <td>{{client.getFirstName()}}</td>
@@ -46,7 +46,12 @@
         </tbody>
     </table>
 </div>
-
+<style>
+.container{
+	background:rgba(0,0,0,0.3);
+	border-radius:5px;
+}
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript"
       charset="utf8"
@@ -62,6 +67,7 @@ $(document).ready(function() {
         columnsDefs: [
             { "width": "50%","targets":2 }
         ],
+        responsive:true,
         language: {
             url:"{{language}}"
         }

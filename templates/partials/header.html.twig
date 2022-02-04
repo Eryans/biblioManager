@@ -12,39 +12,16 @@
 </style>
 <style type="text/css">
 	.banner {
-
 		width: 100vw;
 		min-height: 30vh;
 		position: relative;
 	}
-
-	.banner svg {
-		position: absolute;
-		width: 100%;
-		left: 0;
-		bottom: 0;
-	}
-
 	#logo {
 		margin-top: 5%;
 		margin-left: 10%;
 		width: 10em;
 		color: #ffffff;
 	}
-
-	h4 {
-		position: absolute;
-		font-size: 35px;
-		color: #ffff;
-		/* color: #2ec4b6; */
-		height: 30%;
-		top: 10%;
-		left: 40%;
-		right: 0;
-		margin: auto;
-	}
-
-
 	@media screen and(min-width: 770px) {
 		.banner {
 			min-height: 60vh;
@@ -58,9 +35,9 @@
 
 <header>
 		{% include ("partials/navbar.html.twig") %}
-	<div class="banner container-fluid">
-		<img id="logo" src="{{asset('img/book_logo.png')}}" alt="logo book" class="img-fluid">
-		<h4 class="text-white mb-5 ">{{"Library"|trans}}<br>{{"App Symfony"|trans}}</h4>
+	<div class="banner d-flex justify-content-center">
+		{# <img id="logo" src="{{asset('img/book_logo.png')}}" alt="logo book" class="img-fluid"> #}
+		<h4 class="text-white fs-1 fw-bold mt-4">{{"Library"|trans}} {{"App Symfony"|trans}}</h4>
 	</div>
 	
 </header>

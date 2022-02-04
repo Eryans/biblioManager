@@ -23,7 +23,7 @@ class ClientType extends AbstractType
             ->add('city',TextType::class)
             ->add('mail',TextType::class)
             ->add('phone',TextType::class)
-            ->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
+            ->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary fs-1"]]);
 
     }
 

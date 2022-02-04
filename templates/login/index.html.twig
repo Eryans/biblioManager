@@ -9,8 +9,8 @@
     {% endif %}
 
     <section class="container-fluid d-flex flex-column align-items-center gap-5">
-        <h2>Connexion :</h2>
-        <form action="{{ path('login') }}" class="d-flex flex-column display-6" method="post">
+        <h2 class="text-white" >Connexion :</h2>
+        <form action="{{ path('login') }}" class="d-flex flex-column display-6 text-white" method="post">
             <label for="username">Email:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}"/>
             <br>

@@ -10,7 +10,7 @@
 
 {% block body %}
 
-	<div class="container d-flex flex-column justify-content-center">
+	<div class="container d-flex flex-column justify-content-center text-white">
 		<section class="example-wrapper">
 		<div class="d-flex justify-content-between">
 			<h2 class="fs-1">{{'Book'|trans}}</h2>
@@ -21,7 +21,7 @@
 				{% endif %}
 			</div>
 		</div>
-					<table id="" class="table fs-3">
+					<table id="" class="table fs-3 text-white">
 					<tr>
 						<th>{{"Quantity"|trans}}</th>
 						<td>{{book.getQuantity()}}</td>
@@ -58,22 +58,22 @@
 					</tr>		
 			</table>
 		</section>
-		<section class="row col-5">
+		<section class="row col-5 col-12 m-0 width-100">
 			<h2>{{'Current borrowing client'|trans}}</h2>
-			<table id="" class="table fs-3">
+			<table id="" class="table fs-3 text-white">
 				<thead>
 					<th>{{"Firstname"|trans}}</th>
 					<th>{{"Lastname"|trans}}</th>
-					<th>{{"Borrowed date"|trans}}</th>
-					<th>{{"Due date"|trans}}</th>
+					<th >{{"Borrowed date"|trans}}</th>
+					<th >{{"Due date"|trans}}</th>
 				</thead>
 				<tbody id="tableBody">
 					{% for client in clients %}
 						<tr id="tableBodyRow">
 							<td>{{client.getClient().getFirstName()}}</td>
 							<td>{{client.getClient().getLastName()}}</td>
-							<td>{{client.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
-							<td>{{client.getDueDate()|date("d-M-Y H:i:s")}}</td>
+							<td >{{client.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
+							<td >{{client.getDueDate()|date("d-M-Y H:i:s")}}</td>
 						</tr>
 					{% endfor %}
 				</tbody>
@@ -82,10 +82,14 @@
 	</div>
 <style>
 #table {
-    transform:rotate(90deg);  
+    transform:rotate(90deg);
 }
 #table th, #table td{
     transform:rotate(-90deg);
+}
+.container{
+	background:rgba(0,0,0,0.3);
+	border-radius:5px;
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

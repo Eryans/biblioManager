@@ -6,14 +6,15 @@
       type="text/css"
       href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css" /> {% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 1280px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
+	<style>
+	.example-wrapper{
+		background: rgba(0,0,0,0.4);
+		border-radius: 5px;
+	}
+	</style>
+<div class="example-wrapper text-white  p-4">
     <h2>{{'Client'|trans}}</h2>
-    <table id="myTable" class="display fs-2">
+    <table id="myTable" class="text-white display fs-2">
         <thead>
             <th></th>
             <th data-priority="1">{{"Firstname"|trans}}</th>
@@ -24,7 +25,7 @@
             <th>{{"Email"|trans}}</th>
             <th>{{"Phone"|trans}}</th>
         </thead>
-        <tbody>
+        <tbody class="text-dark">
         {% for client in clients %}
             <tr>
                 <td><a class="btn btn-primary" href={{path("client_details", {id : client.getId()})}}>{{'Details'|trans}}</a></td>
