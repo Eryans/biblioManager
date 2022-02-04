@@ -12,50 +12,59 @@
 </style>
 
 <div class="example-wrapper">
-    <h2>{{'Client'|trans}}</h2>
-    <table id="" class="table">
-        <thead>
-            <th>{{"Firstname"|trans}}</th>
-            <th>{{"Lastname"|trans}}</th>
-            <th>{{"Birthdate"|trans}}</th>
-            <th>{{"Adress"|trans}}</th>
-            <th>{{"City"|trans}}</th>
-            <th>{{"Email"|trans}}</th>
-            <th>{{"Phone"|trans}}</th>
-            <th></th>
-            <th></th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{client.getFirstName()}}</td>
-                <td>{{client.getLastName()}}</td>
-                <td>{{client.getBirthDate().format("d-m-Y")}}</td>
-                <td>{{client.getAdress()}}</td>
-                <td>{{client.getCity()}}</td>
-                <td>{{client.getMail()}}</td>
-                <td>{{client.getPhone()}}</td>
-                <td><a class="btn btn-success" href={{path("client_edit",{id: client.getId()})}}>{{'Edit'|trans}}</a></td>
-                {% if is_granted('ROLE_ADMIN') %}
-                    {% if client.getBooks()|length != 0 %}
-                    <td><button class="btn btn-danger disabled">{{'Delete'|trans}}</button></td>
-                    {% else %}
-                    <td><a class="btn btn-danger" href={{path("client_delete",{id: client.getId()})}}>{{'Delete'|trans}}</a></td>
-                    {% endif %}
+     <div class="d-flex justify-content-between">
+        <h2 class="fs-1 fw-bold">{{'Client'|trans}}</h2>
+         <div>
+             <a class="btn btn-success fs-3" href={{path("client_edit",{id: client.getId()})}}>{{'Edit'|trans}}</a></td>
+                     {% if is_granted('ROLE_ADMIN') %}
+                {% if client.getBooks()|length != 0 %}
+                <td><button class="btn btn-danger disabled fs-3">{{'Delete'|trans}}</button></td>
+                {% else %}
+                <td><a class="btn btn-danger fs-3" href={{path("client_delete",{id: client.getId()})}}>{{'Delete'|trans}}</a></td>
                 {% endif %}
+                     {% endif %}
+         </div>
+     </div>
+    <br>
+    <table id="" class="table fs-3">
+            <tr>
+                <th>{{"Firstname"|trans}}</th>
+                <td>{{client.getFirstName()}}</td>
             </tr>
-        </tbody>
+            <tr>
+                <th>{{"Lastname"|trans}}</th>
+                <td>{{client.getLastName()}}</td>
+            </tr>
+            <tr>
+                <th>{{"Birthdate"|trans}}</th>
+                <td>{{client.getBirthDate().format("d-m-Y")}}</td>
+            </tr>
+            <tr>
+                <th>{{"Adress"|trans}}</th>
+                <td>{{client.getAdress()}}</td>
+            </tr>
+            <tr>
+                <th>{{"City"|trans}}</th>
+                <td>{{client.getCity()}}</td>
+            </tr>
+            <tr>
+                <th>{{"Email"|trans}}</th>
+                <td>{{client.getMail()}}</td>
+            </tr>
+            <tr>
+                <th>{{"Phone"|trans}}</th>
+                <td>{{client.getPhone()}}</td>
+            </tr>        
     </table>
-    <h2>{{'Borrowed book by'|trans}} {{client.getFirstName()}}</h2>
-    <table id="myTable" class="display">
+<br>
+{% if bookHist|length > 0%}
+    <h2 class="fs-1 fw-bold">{{'Borrowed book by'|trans}} {{client.getFirstName()}}</h2>
+    <br>
+    <table id="myTable" class=" table display fs-3">
         <thead>
             <th>{{"Title"|trans}}</th>
             <th>{{"Author"|trans}}</th>
-            <th>{{"Summary"|trans}}</th>
-            <th>{{"release_date"|trans}}</th>
             <th>{{"Category"|trans}}</th>
-            <th>{{"forChild"|trans}}</th>
-            <th></th>
-            <th></th>
             <th></th>
         </thead>
         <tbody>
@@ -63,19 +72,19 @@
             <tr>
                 <td>{{book.getBook().getTitle()}}</td>
                 <td>{{book.getBook().getAuthor()}}</td>
-                <td>{{book.getBook().getSummary()}}</td>
-                <td>{{book.getBook().getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
                 <td>{{book.getBook().getCategory()}}</td>
-                <td>{% if book.getBook().getForChild() %} ᶘ ᵒᴥᵒᶅ {% else %} ( ͡° ͜ʖ ͡°) {% endif %}</td>
                 <td>
-                <a class="btn btn-primary" href={{path("client_book_unlink", {idB : book.getBook().getId(),idC : app.request.get("id")})}}>{{'Unborrow'|trans}}</a>
+                <a class="btn btn-primary fs-2" href={{path("client_book_unlink", {idB : book.getBook().getId(),idC : app.request.get("id")})}}>{{'Unborrow'|trans}}</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-     <h2>{{'Book history'|trans}}</h2>
-    <table id="" class="table">
+{% endif %}
+<br>
+     <h2 class="fs-1 fw-bold">{{'Book history'|trans}}</h2>
+    <br>
+    <table id="" class="table fs-3">
         <thead>
             <th>{{"Title"|trans}}</th>
             <th>{{"Author"|trans}}</th>
@@ -100,7 +109,12 @@
         </tbody>
     </table>
 </div>
-
+<style>
+.table, .table td, .table tr, .table th{
+    border: 1px rgba(0,0,0,0.3) solid;
+    border-radius: 5px;
+}
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript"
       charset="utf8"

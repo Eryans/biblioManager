@@ -74,8 +74,8 @@ class ClientController extends AbstractController
         }
         $borrowDay = 1;
         $form = $this->createFormBuilder()
-        ->add("borrowDay",NumberType::class,[])
-        ->add("submit",SubmitType::class,[])
+        ->add("borrowDay",NumberType::class,["label" => "Borrow day","data" => 7])
+        ->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]])
         ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
