@@ -1,22 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" style="color: #e7bb41;" href="#">Bibliotheque</a>
+<style type="text/css">
+	.navBg {
+		background-color: #44bba4;
+	}
+</style>
+
+<nav class="navbar navbar-expand navbar-light navBg d-flex justify-content-center" style="z-index:1000">
+	<a class="navbar-brand text-white p-2" href="#">{{"Library"|trans}}</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav">
-			<li class="nav-item active">
-				<a class="nav-link" href={{path("book_listing")}}>{{"Home"|trans}}
+	<div class="" id="navbarNav">
+		<ul class="navbar-nav d-flex flex-row justify-content-start">
+			<li class="nav-item active p-2">
+				<a class="nav-link text-white" href={{path("book_listing")}}>{{"Home"|trans}}
 					<span class="sr-only"></span>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href={{path("book_listing")}}>{{"Books"|trans}}</a>
+			<li class="nav-item p-2">
+				<a class="nav-link text-white" href={{path("book_listing")}}>{{"Books"|trans}}</a>
 			</li>
 
-			<li class="nav-item">
-				<a class="nav-link" href={{path("client_listing")}}>{{"Clients"|trans}}</a>
+			<li class="nav-item p-2">
+				<a class="nav-link text-white" href={{path("client_listing")}}>{{"Clients"|trans}}</a>
 			</li>
 		</ul>
+	</div>
+	<div class="p-2 end-0">
+		<a class="btn btn-light" href={{path("app_logout")}}>{{"Logout"|trans}}</a>
 	</div>
 </nav>

@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use ErrorException;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -31,12 +32,14 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/listing', name: 'client_listing')]
-    public function showClients(Request $request,ManagerRegistry $registry): Response
+    public function showClients(Request $request, ManagerRegistry $registry): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $locale = $request->getLocale();
-        if ($locale === "fr"){
+        if ($locale === "fr") {
             $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/fr_fr.json';
+        } else {
+            $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/en-gb.json';
         }
         $clients = $registry->getRepository(Client::class)->findAll();
         return $this->render('client/listing.html.twig', [
@@ -50,7 +53,7 @@ class ClientController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-        $Borrowedhistory = $registry->getRepository(History::class)->findBy(["client" => $client,"returned_date" => null]);
+        $Borrowedhistory = $registry->getRepository(History::class)->findBy(["client" => $client, "returned_date" => null]);
         $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
         return $this->render('client/details.html.twig', [
             'controller_name' => 'client Detail',
@@ -60,19 +63,38 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
-    public function selectClient(ManagerRegistry $registry, int $id): Response
+    public function selectClient(Request $request,ManagerRegistry $registry, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $locale = $request->getLocale();
+        if ($locale === "fr") {
+            $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/fr_fr.json';
+        } else {
+            $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/en-gb.json';
+        }
+        $borrowDay = 1;
+        $form = $this->createFormBuilder()
+        ->add("borrowDay",NumberType::class,[])
+        ->add("submit",SubmitType::class,[])
+        ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+            $borrowDay = $data["borrowDay"];
+        }
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
         $clients = $registry->getRepository(Client::class)->findAll();
-        return $this->render('client/select.html.twig', [
+        return $this->renderForm('client/select.html.twig', [
             'controller_name' => 'clientController',
             'clients' => $clients,
             'book' => $book,
+            'language' => $language,
+            'form' => $form,
+            'numOfDay' => $borrowDay
         ]);
     }
-    #[Route('/client/link/{idB},{idC}', name: 'client_book_link')]
-    public function linkClientToBook(EntityManagerInterface $event, ManagerRegistry $registry, int $idB, int $idC): Response
+    #[Route('/client/link/{idB},{idC},{numOfDay}', name: 'client_book_link')]
+    public function linkClientToBook(EntityManagerInterface $event, ManagerRegistry $registry, int $idB, int $idC, $numOfDay): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $doctrine = $registry->getManager();
@@ -82,6 +104,7 @@ class ClientController extends AbstractController
         $history->setClient($client);
         $history->setBook($book);
         $history->setBorrowDate(new DateTime("now"));
+        $history->setDueDate(new DateTime("now + ".$numOfDay."days"));
         //$book->setClient($client);
         $book->setQuantity($book->getQuantity() - 1);
         $client->addBook($book);
@@ -107,7 +130,7 @@ class ClientController extends AbstractController
         return $this->redirectToRoute("client_details", ["id" => $client->getId()]);
     }
     #[Route('/client/create', name: 'client_create')]
-    public function createclient(TranslatorInterface $translator,Request $request, EntityManagerInterface $event): Response
+    public function createclient(TranslatorInterface $translator, Request $request, EntityManagerInterface $event): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $client = new Client();
@@ -128,7 +151,7 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/edit/{id}', name: 'client_edit')]
-    public function editClient(TranslatorInterface $translator,ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
+    public function editClient(TranslatorInterface $translator, ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
@@ -152,8 +175,8 @@ class ClientController extends AbstractController
     public function deleteClient(ManagerRegistry $registry, EntityManagerInterface $event, $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]); 
-        if (count($client->getBooks()) === 0){
+        $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
+        if (count($client->getBooks()) === 0) {
             $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
             foreach ($history as $h) {
                 $h->setBook(null);

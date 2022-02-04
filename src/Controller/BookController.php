@@ -32,6 +32,8 @@ class BookController extends AbstractController
         $locale = $request->getLocale();
         if ($locale === "fr") {
             $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/fr_fr.json';
+        } else {
+            $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/en-gb.json';
         }
         $books = $registry->getRepository(Book::class)->findAll();
         return $this->render('book/listing.html.twig', [
@@ -43,7 +45,7 @@ class BookController extends AbstractController
 
 
     #[Route('/book/create', name: 'book_create')]
-    public function createBook(TranslatorInterface $translator,Request $request, EntityManagerInterface $event): Response
+    public function createBook(TranslatorInterface $translator, Request $request, EntityManagerInterface $event): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $book = new Book();
@@ -65,7 +67,7 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('/book/edit/{id}', name: 'book_edit')]
-    public function editBook(TranslatorInterface $translator,ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
+    public function editBook(TranslatorInterface $translator, ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);

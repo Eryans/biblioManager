@@ -81,6 +81,7 @@
             <th>{{"Author"|trans}}</th>
             <th>{{"Borrowed date"|trans}}</th>
             <th>{{"Returned date"|trans}}</th>
+            <th>{{"Due date"|trans}}</th>
         </thead>
         <tbody>
             {% for history in histories %}
@@ -93,6 +94,7 @@
                 {% else %}
                 <td> Not returned </td>
                 {% endif %}
+                <td>{{history.getDueDate()|date("d-M-Y H:i:s")}}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -114,7 +116,7 @@ $(document).ready(function() {
         ],
         language: {
         }
-        
+        responsive:true
     });
     
 } );

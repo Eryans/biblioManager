@@ -10,69 +10,73 @@
 
 {% block body %}
 
-	<div class="example-wrapper">
-		<h2>{{'Book'|trans}}</h2>
-		<table id="" class="table">
-			<thead>
-				<th>{{"Quantity"|trans}}</th>
-				<th>{{"Title"|trans}}</th>
-				<th>{{"Author"|trans}}</th>
-				<th>{{"Summary"|trans}}</th>
-				<th>{{"release_date"|trans}}</th>
-				<th>{{"Category"|trans}}</th>
-				<th>{{"forChild"|trans}}</th>
-				<th>{{"isTaken"|trans}}</th>
-				<th></th>
-				<th></th>
-				{% if is_granted('ROLE_ADMIN') %}
-				<th></th>
-				{% endif %}
-			</thead>
-			<tbody id="tableBody">
-					<tr id="tableBodyRow">
-						<td>{{book.getQuantity()}}</td>
-						<td>{{book.getTitle()}}</td>
-						<td>{{book.getAuthor()}}</td>
-						<td>{{book.getSummary()}}</td>
-						<td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
-						<td>{{book.getCategory()}}</td>
-						<td>
-							{% if book.getForChild() %}
-								ᶘ ᵒᴥᵒᶅ
-							{% else %}
-								( ͡° ͜ʖ ͡°)
+	<div class="container d-flex flex-column justify-content-center">
+		<section class="example-wrapper">
+			<h2>{{'Book'|trans}}</h2>
+			<table id="" class="table">
+				<thead>
+					<th>{{"Quantity"|trans}}</th>
+					<th>{{"Title"|trans}}</th>
+					<th>{{"Author"|trans}}</th>
+					<th>{{"Summary"|trans}}</th>
+					<th>{{"release_date"|trans}}</th>
+					<th>{{"Category"|trans}}</th>
+					<th>{{"forChild"|trans}}</th>
+					<th></th>
+					<th></th>
+					{% if is_granted('ROLE_ADMIN') %}
+					<th></th>
+					{% endif %}
+				</thead>
+				<tbody id="tableBody">
+						<tr id="tableBodyRow">
+							<td>{{book.getQuantity()}}</td>
+							<td>{{book.getTitle()}}</td>
+							<td>{{book.getAuthor()}}</td>
+							<td>{{book.getSummary()}}</td>
+							<td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
+							<td>{{book.getCategory()}}</td>
+							<td>
+								{% if book.getForChild() %}
+									ᶘ ᵒᴥᵒᶅ
+								{% else %}
+									( ͡° ͜ʖ ͡°)
+								{% endif %}
+							</td>
+							<td>
+								<a class="btn btn-success" href={{path("book_edit",{id:book.getId()})}}>{{'Edit'|trans}}</a>
+							</td>
+							{% if is_granted('ROLE_ADMIN') %}
+							<td>
+								<a class="btn btn-danger" href={{path("book_delete",{id:book.getId()})}}=>{{'Delete'|trans}}</a>
+							</td>
 							{% endif %}
-						</td>
-						<td>
-							<a class="btn btn-success" href={{path("book_edit",{id:book.getId()})}}>{{'Edit'|trans}}</a>
-						</td>
-						{% if is_granted('ROLE_ADMIN') %}
-						<td>
-							<a class="btn btn-danger" href={{path("book_delete",{id:book.getId()})}}=>{{'Delete'|trans}}</a>
-						</td>
-						{% endif %}
-					</tr>
-			</tbody>
-		</table>
+						</tr>
+				</tbody>
+			</table>
+		</section>
+		<section class="row col-5">
+			<h2>{{'Current borrowing client'|trans}}</h2>
+			<table id="" class="table">
+				<thead>
+					<th>{{"Firstname"|trans}}</th>
+					<th>{{"Lastname"|trans}}</th>
+					<th>{{"Borrowed date"|trans}}</th>
+					<th>{{"Due date"|trans}}</th>
+				</thead>
+				<tbody id="tableBody">
+					{% for client in clients %}
+						<tr id="tableBodyRow">
+							<td>{{client.getClient().getFirstName()}}</td>
+							<td>{{client.getClient().getLastName()}}</td>
+							<td>{{client.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
+							<td>{{client.getDueDate()|date("d-M-Y H:i:s")}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</section>
 	</div>
-    <h2>{{'Current borrowing client'|trans}}</h2>
-    <table id="" class="table">
-        <thead>
-            <th>{{"Firstname"|trans}}</th>
-            <th>{{"Lastname"|trans}}</th>
-            <th>{{"Borrowed date"|trans}}</th>
-        </thead>
-        <tbody id="tableBody">
-            {% for client in clients %}
-                <tr id="tableBodyRow">
-                    <td>{{client.getClient().getFirstName()}}</td>
-                    <td>{{client.getClient().getLastName()}}</td>
-                    <td>{{client.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
-
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript"
@@ -81,16 +85,5 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-<script>
-	$(document).ready(function() {
-		$('#myTable').DataTable({
-			columnsDefs: [
-				{ "width": "50%","targets":2 }
-			],
-			language: {
-			}
-			
-		});
-	} );
-</script>
+
 {% endblock %}

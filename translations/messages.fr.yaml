@@ -5,7 +5,7 @@ Summary: Résumé
 release_date: Date de parution
 Category: Catégorie
 forChild: "+18 ans"
-isTaken: Disponible 
+isTaken: Disponibilité 
 Edit: Modifier
 Delete: Supprimer
 Borrow: Emprunter
@@ -45,3 +45,11 @@ App Symfony: Une Appli Symfony
 Home: Accueil
 Books: Livres
 Clients: Clients
+
+Book list: Liste livres
+Client list: Liste clients
+
+Select: Sélectionner
+
+Borrow Duration: Durée d'emprunt
+Due date: Date d'échéance

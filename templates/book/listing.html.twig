@@ -15,7 +15,6 @@
 		<table id="myTable" class="display">
 			<thead>
 				<th></th>
-				<th>{{"Quantity"|trans}}</th>
 				<th>{{"Title"|trans}}</th>
 				<th>{{"Author"|trans}}</th>
 				<th>{{"Summary"|trans}}</th>
@@ -33,26 +32,19 @@
 				{% for book in books %}
 					<tr id="tableBodyRow">
 						<td><a class="btn btn-primary" href={{path("book_details", {"id" : book.getId()} )}}>{{'Details'|trans}}</a></td>
-						<td>{{book.getQuantity()}}</td>
-						<td>{{book.getTitle()}}</td>
-						<td>{{book.getAuthor()}}</td>
-						<td>{{book.getSummary()}}</td>
-						<td>{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
-						<td>{{book.getCategory()}}</td>
-						<td>
+						<td class="text-center">{{book.getTitle()}}</td>
+						<td class="text-center">{{book.getAuthor()}}</td>
+						<td class="text-center">{{book.getSummary()}}</td>
+						<td class="text-center">{{book.getReleaseDate()|date("d-M-Y","Europe/Paris")}}</td>
+						<td class="text-center">{{book.getCategory()}}</td>
+						<td class="text-center">
 							{% if book.getForChild() %}
 								ᶘ ᵒᴥᵒᶅ
 							{% else %}
 								( ͡° ͜ʖ ͡°)
 							{% endif %}
 						</td>
-						<td>
-							{% if book.getAvailable() %}
-								{{'Available'|trans}}
-							{% else %}
-								{{"Taken"|trans}}
-							{% endif %}
-						</td>
+						<td class="text-center">{{book.getQuantity()}} en stock</td>
 						<td>
 							{% if book.getQuantity > 0 %}
 								<a class="btn btn-primary" href={{path("client_select", {"id" : book.getId()} )}}>{{'Borrow'|trans}}</a>
@@ -88,7 +80,7 @@
 	$(document).ready(function() {
 		$('#myTable').DataTable({
 			columnsDefs: [
-				{ "width": "50%","targets":2 }
+				{ "width": "50%","targets": [2,8] }
 			],
 			language: {
 				url : '{{language}}'

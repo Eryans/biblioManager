@@ -1,0 +1,55 @@
+Quantity: Quantity
+Title: Title
+Author: Author
+Summary: Summary
+release_date: Release date
+Category: Category
+forChild: "+18 only"
+isTaken: Availability 
+Edit: Edit
+Delete: Delete
+Borrow: Borrow
+Details: Details
+Create book: Add book
+Book: Book
+
+Client: Clients
+Firstname: First name
+Lastname: Last name
+Birthdate: Date of birth
+Adress: Adress
+City: City
+Email: Email
+Phone: Phone
+Create client: Add new client
+Mail: Email
+
+Borrowed book by: Books borrowed by
+Borrowed date: Borrow date
+Returned date: Return date
+Book history: Books history
+Unborrow: Return
+
+Edit Client: Edit client
+Create Client: Create client
+Submit: Comfirm
+
+Logout: Logout
+
+Current borrowing client: Currently in possession of
+
+Edit book: Edit book
+Library: BiblioManager
+App Symfony: A Symfony app
+
+Home: Home
+Books: Books
+Clients: Clients
+
+Book list: Book list
+Client list: Client list
+
+Select: Select
+
+Borrow Duration: Borrow duration
+Due date: Due date

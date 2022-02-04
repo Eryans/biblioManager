@@ -27,6 +27,9 @@ class History
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $returned_date;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $due_date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class History
     public function setReturnedDate(?\DateTimeInterface $returned_date): self
     {
         $this->returned_date = $returned_date;
+
+        return $this;
+    }
+
+    public function getDueDate(): ?\DateTimeInterface
+    {
+        return $this->due_date;
+    }
+
+    public function setDueDate(?\DateTimeInterface $due_date): self
+    {
+        $this->due_date = $due_date;
 
         return $this;
     }

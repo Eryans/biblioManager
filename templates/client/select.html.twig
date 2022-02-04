@@ -13,6 +13,7 @@
 
 <div class="example-wrapper">
     <h2>{{'Client'|trans}}</h2>
+    {{form(form)}}
     <table id="myTable" class="display">
         <thead>
             <th>{{"Firstname"|trans}}</th>
@@ -37,7 +38,7 @@
                 {% if book.getForChild() == false and client.isAdult() == false %}
                 <td><button class="btn btn-success disabled">{{'Select'|trans}}</a></td>
                 {% else %}
-                <td><a class="btn btn-success" href={{path("client_book_link",{idC:client.getId(), idB: app.request.get("id")}) }}>{{'Select'|trans}}</a></td>
+                <td><a class="btn btn-success" href={{path("client_book_link",{idC:client.getId(), idB: app.request.get("id"),numOfDay: numOfDay}) }}>{{'Select'|trans}}</a></td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -59,6 +60,7 @@ $(document).ready(function() {
             { "width": "50%","targets":2 }
         ],
         language: {
+            url:"{{language}}"
         }
         
     });
