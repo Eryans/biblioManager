@@ -7,11 +7,10 @@
         Welcome!
       {% endblock %}
     </title>
-    <link rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" />
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
+	<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
     {% endblock %}
 
     {% block javascripts %}
@@ -21,15 +20,9 @@
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous" />
+
   </head>
   <body>
-    <style>
-      .dataTables_length, .dataTables_filter, .dataTables_info,
-      .dataTables_paginate, .paginate_button { color: white !important; }
-      .container{ background:rgba(0,0,0,0.6); border-radius:5px; } 
-	  .navBg { background-color: rgba(100,80,50,0.15); box-shadow: 2px 2px 50px
-      rgba(0,0,0,0.2); }
-    </style>
     {% include 'partials/header.html.twig' %}
     {% block body %}
 
@@ -44,7 +37,27 @@
   </body>
 </html>
 <style>
-  body{ background-color: rgba(100,80,50,1); background-image:
-  url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80");
-  background-size: 200vh; }
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate,
+.paginate_button {
+    color: white !important;
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+}
+
+.navBg {
+    background-color: rgba(100, 80, 50, 0.15);
+    box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background-color: rgba(100, 80, 50, 1);
+    background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80");
+    background-size: 200vh;
+}
 </style>
