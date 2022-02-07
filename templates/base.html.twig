@@ -10,7 +10,8 @@
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
-	<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+      {# TODO : MOVE TO PUBLIC FOLDER #}
+	  <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
     {% endblock %}
 
     {% block javascripts %}
