@@ -176,7 +176,8 @@ class ClientController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-        if (count($client->getBooks()) === 0) {
+        $clientBooks = $registry->getRepository(History::class)->findBy(["client" => $client,"returned_date" => null]);
+        if (count($clientBooks) === 0) {
             $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
             foreach ($history as $h) {
                 $h->setBook(null);

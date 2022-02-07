@@ -16,13 +16,13 @@
         <h2 class="fs-1 fw-bold">{{'Client'|trans}}</h2>
          <div>
              <a class="btn btn-success fs-3" href={{path("client_edit",{id: client.getId()})}}>{{'Edit'|trans}}</a></td>
-                     {% if is_granted('ROLE_ADMIN') %}
-                {% if client.getBooks()|length != 0 %}
-                <td><button class="btn btn-danger disabled fs-3">{{'Delete'|trans}}</button></td>
-                {% else %}
-                <td><a class="btn btn-danger fs-3" href={{path("client_delete",{id: client.getId()})}}>{{'Delete'|trans}}</a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if bookHist|length != 0 %}
+                        <td><button class="btn btn-danger disabled fs-3">{{'Delete'|trans}}</button></td>
+                    {% else %}
+                        <td><a class="btn btn-danger fs-3" href={{path("client_delete",{id: client.getId()})}}>{{'Delete'|trans}}</a></td>
+                    {% endif %}
                 {% endif %}
-                     {% endif %}
          </div>
      </div>
     <br>
@@ -115,7 +115,7 @@
     border-radius: 5px;
 }
 .container{
-	background:rgba(0,0,0,0.3);
+	background:rgba(0,0,0,0.6);
 	border-radius:5px;
 }
 </style>
