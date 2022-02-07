@@ -11,14 +11,10 @@ use App\Entity\Book;
 use App\Entity\History;
 use App\Form\ClientType;
 use DateTime;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
-use ErrorException;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ClientController extends AbstractController
@@ -72,7 +68,7 @@ class ClientController extends AbstractController
         } else {
             $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/en-gb.json';
         }
-        $borrowDay = 1;
+        $borrowDay = 7;
         $form = $this->createFormBuilder()
         ->add("borrowDay",NumberType::class,["label" => "Borrow day","data" => 7])
         ->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]])
