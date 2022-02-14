@@ -4,7 +4,7 @@ Author: Auteur
 Summary: Résumé
 release_date: Date de parution
 Category: Catégorie
-forChild: "+18 ans"
+forChild: "Adapté aux -18 ans"
 isTaken: Disponibilité 
 Edit: Modifier
 Delete: Supprimer
@@ -58,3 +58,5 @@ Borrow day: Durée d'emprunt
 
 Approved by: Approuvé par
 History: Historique
+
+Borrowed by: Emprunté par

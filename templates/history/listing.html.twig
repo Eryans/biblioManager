@@ -31,6 +31,9 @@
             {{ 'Due date'|trans }}
           </th>
           <th>
+            {{ 'Borrowed by'|trans }}
+          </th>
+          <th>
             {{ 'Approved by'|trans }}
           </th>
         </thead>
@@ -57,6 +60,9 @@
               {% endif %}
               <td>
                 {{ history.getDueDate()|date('d-M-Y H:i:s') }}
+              </td>
+              <td>
+                {{ history.getClient().getFirstName() }} {{ history.getClient().getLastName() }}
               </td>
               <td>
                 {{ history.getUser().getEmail() }}
@@ -87,4 +93,5 @@ $(document).ready(function() {
     });
 } );
 </script>
+
 {% endblock %}

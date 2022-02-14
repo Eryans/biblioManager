@@ -4,7 +4,7 @@ Author: Author
 Summary: Summary
 release_date: Release date
 Category: Category
-forChild: "+18 only"
+forChild: "Appropriate for -18 years old"
 isTaken: Availability 
 Edit: Edit
 Delete: Delete
@@ -59,3 +59,5 @@ Borrow day: Borrowing days
 Approved by: Approved by
 
 History: History
+
+Borrowed by: Borrowed by

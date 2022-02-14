@@ -14,6 +14,7 @@ class HistoryController extends AbstractController
     #[Route('/history', name: 'history')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('history/index.html.twig', [
             'controller_name' => 'HistoryController',
         ]);

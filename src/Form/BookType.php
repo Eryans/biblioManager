@@ -19,7 +19,7 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title',TextType::class,["label" => "Title",
+            ->add('title',TextType::class,[
             'constraints' => [
                 new NotBlank(),
                 new Length([
@@ -28,6 +28,7 @@ class BookType extends AbstractType
                 ]),
             ]])
             ->add('author',TextType::class,['constraints' => [
+                new NotBlank(),
                 new Length([
                     'min' => 1,
                     'max' => 100
@@ -39,13 +40,15 @@ class BookType extends AbstractType
                     'min' => 2,
                     'max' => 400
                 ])]])
-            ->add('release_date',DateType::class, ['widget' => 'single_text',"label" => "release_date"])
+            ->add('release_date',DateType::class, ['widget' => 'single_text','label' => 'release_date'])
             ->add('category',TextType::class,['constraints' => [
                 new Length([
                     'min' => 2,
                     'max' => 50
                 ])]])
-            ->add('for_child',CheckboxType::class,['required' => false, 'label' => 'forChild'])
+            ->add('for_child',CheckboxType::class,['required' => false, 'label' => 'forChild',
+            'attr' => ['class' => ''],
+            ])
             ->add('quantity',NumberType::class,[])
         ;
     }
