@@ -12,11 +12,18 @@ use App\Form\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\SecurityBundle;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Repository\BookRepository;
 
 class BookController extends AbstractController
 {
+    private $bookRepository;
+
+    public function __construct(BookRepository $br)
+    {
+        $this->bookRepository = $br;
+    }
+    
     #[Route('/book', name: 'book')]
     public function index(): Response
     {
@@ -26,7 +33,7 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('/book/listing', name: 'book_listing')]
-    public function showBooks(ManagerRegistry $registry, Request $request): Response
+    public function showBooks( Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $locale = $request->getLocale();
@@ -35,7 +42,9 @@ class BookController extends AbstractController
         } else {
             $language = '//cdn.datatables.net/plug-ins/1.11.4/i18n/en-gb.json';
         }
-        $books = $registry->getRepository(Book::class)->findAll();
+        //$books = $registry->getRepository(Book::class)->findAll();
+        $books = $this->bookRepository->findAllBooks();
+
         return $this->render('book/listing.html.twig', [
             'controller_name' => 'BookController',
             'books' => $books,
@@ -70,8 +79,8 @@ class BookController extends AbstractController
     public function editBook(TranslatorInterface $translator, ManagerRegistry $registry, Request $request, EntityManagerInterface $event, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
-
+        //$book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
+        $book = $this->bookRepository->findBookById($id);
         $form = $this->createForm(BookType::class, $book);
         $form->add("submit", SubmitType::class, [
             "attr" => [
@@ -111,7 +120,8 @@ class BookController extends AbstractController
     public function showBookDetails(ManagerRegistry $registry, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
+        //$book = $registry->getRepository(Book::class)->findOneBy(["id" => $id]);
+        $book = $this->bookRepository->findBookById($id);
         $bookHistory = $registry->getRepository(History::class)->findBy(["book" => $book, "returned_date" => null]);
         return $this->render('book/details.html.twig', [
             'controller_name' => 'BookController',

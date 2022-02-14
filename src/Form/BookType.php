@@ -21,8 +21,9 @@ class BookType extends AbstractType
         $builder
             ->add('title',TextType::class,["label" => "Title",
             'constraints' => [
+                new NotBlank(),
                 new Length([
-                    'min' => 1,
+                    'min' => 2,
                     'max' => 100
                 ]),
             ]])

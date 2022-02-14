@@ -93,6 +93,7 @@ class ClientController extends AbstractController
     public function linkClientToBook(EntityManagerInterface $event, ManagerRegistry $registry, int $idB, int $idC, $numOfDay): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
         $doctrine = $registry->getManager();
         $book = $registry->getRepository(Book::class)->findOneBy(["id" => $idB]);
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $idC]);
@@ -101,6 +102,7 @@ class ClientController extends AbstractController
         $history->setBook($book);
         $history->setBorrowDate(new DateTime("now"));
         $history->setDueDate(new DateTime("now + ".$numOfDay."days"));
+        $history->setUser($user);
         //$book->setClient($client);
         $book->setQuantity($book->getQuantity() - 1);
         $client->addBook($book);

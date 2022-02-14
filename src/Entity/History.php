@@ -30,6 +30,10 @@ class History
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $due_date;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'histories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +95,18 @@ class History
     public function setDueDate(?\DateTimeInterface $due_date): self
     {
         $this->due_date = $due_date;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
