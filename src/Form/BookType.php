@@ -39,7 +39,8 @@ class BookType extends AbstractType
                 new Length([
                     'min' => 2,
                     'max' => 400
-                ])]])
+                ])],
+            'attr' => ['style' => "height:100%;width:100%;"]])
             ->add('release_date',DateType::class, ['widget' => 'single_text','label' => 'release_date'])
             ->add('category',TextType::class,['constraints' => [
                 new Length([
