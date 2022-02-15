@@ -33,8 +33,6 @@ class Book
     private $for_child;
 
 
-    #[ORM\ManyToOne(targetEntity: client::class, inversedBy: 'books')]
-    private $client;
 
     #[ORM\Column(type: 'integer')]
     private $quantity;
@@ -117,17 +115,6 @@ class Book
     }
 
 
-    public function getClient(): ?client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
-    }
 
     public function getQuantity(): ?int
     {

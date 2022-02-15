@@ -16,8 +16,6 @@ class Client
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Book::class)]
-    private $books;
 
     #[ORM\Column(type: 'string', length: 50)]
     private $first_name;
@@ -50,32 +48,6 @@ class Client
         return $this->id;
     }
 
-    /**
-     * @return Collection|Book[]
-     */
-    public function getBooks(): Collection
-    {
-        return $this->books;
-    }
-
-    public function addBook(Book $book): self
-    {
-        $this->books[] = $book;
-
-        return $this;
-    }
-
-    public function removeBook(Book $book): self
-    {
-        if ($this->books->removeElement($book)) {
-            // set the owning side to null (unless already changed)
-            if ($book->getClient() === $this) {
-                $book->setClient(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getFirstName(): ?string
     {

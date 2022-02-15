@@ -105,7 +105,6 @@ class ClientController extends AbstractController
         $history->setDueDate(new DateTime("now + " . $numOfDay . "days"));
         $history->setUser($user);
         $book->setQuantity($book->getQuantity() - 1);
-        $client->addBook($book);
         $doctrine->persist($history);
         $event->persist($book, $client);
         $doctrine->flush();
@@ -121,8 +120,6 @@ class ClientController extends AbstractController
         $history = $registry->getRepository(History::class)->findOneBy(["client" => $client, "book" => $book, "returned_date" => null]);
         $history->setReturnedDate(new DateTime("now"));
         $book->setQuantity($book->getQuantity() + 1);
-        //$book->setClient(null);
-        $client->removeBook($book);
         $event->persist($book, $client, $history);
         $event->flush();
         return $this->redirectToRoute("client_details", ["id" => $client->getId()]);

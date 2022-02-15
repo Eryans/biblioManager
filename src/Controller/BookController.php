@@ -66,10 +66,10 @@ class BookController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->addFlash("success", $translator->trans("Book added"));
                 $book = $form->getData();
                 $event->persist($book);
                 $event->flush();
+                $this->addFlash("success", $translator->trans("Book added"));
             } catch (Exception $e) {
                 $this->addFlash("error", $translator->trans("Something went wrong")." : " . $e);
             }
