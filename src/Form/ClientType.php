@@ -37,6 +37,7 @@ class ClientType extends AbstractType
             ])
             ->add('birth_date', DateType::class, [
                 'widget' => 'single_text', 'label' => 'Birthdate',
+                'label_attr' => ['style' => 'height:100%;width:100%;']
             ])
             ->add('adress', TextType::class, [
                 'constraints' => [
