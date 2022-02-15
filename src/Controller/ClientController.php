@@ -12,6 +12,7 @@ use App\Entity\History;
 use App\Form\ClientType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +60,7 @@ class ClientController extends AbstractController
         ]);
     }
     #[Route('/client/select/{id}', name: 'client_select')]
-    public function selectClient(Request $request,ManagerRegistry $registry, int $id): Response
+    public function selectClient(Request $request, ManagerRegistry $registry, int $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $locale = $request->getLocale();
@@ -70,11 +71,11 @@ class ClientController extends AbstractController
         }
         $borrowDay = 7;
         $form = $this->createFormBuilder()
-        ->add("borrowDay",NumberType::class,["label" => "Borrow day","data" => 7])
-        ->add("submit",SubmitType::class,["attr" => ["class" => "btn btn-primary"]])
-        ->getForm();
+            ->add("borrowDay", NumberType::class, ["label" => "Borrow day", "data" => 7])
+            ->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]])
+            ->getForm();
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $borrowDay = $data["borrowDay"];
         }
@@ -101,7 +102,7 @@ class ClientController extends AbstractController
         $history->setClient($client);
         $history->setBook($book);
         $history->setBorrowDate(new DateTime("now"));
-        $history->setDueDate(new DateTime("now + ".$numOfDay."days"));
+        $history->setDueDate(new DateTime("now + " . $numOfDay . "days"));
         $history->setUser($user);
         $book->setQuantity($book->getQuantity() - 1);
         $client->addBook($book);
@@ -135,9 +136,14 @@ class ClientController extends AbstractController
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $client = $form->getData();
-            $event->persist($client);
-            $event->flush();
+            try {
+                $this->addFlash("success", $translator->trans("Client added"));
+                $client = $form->getData();
+                $event->persist($client);
+                $event->flush();
+            } catch (Exception $e) {
+                $this->addFlash("error", $translator->trans("something went wrong")." :" . $e);
+            }
             return $this->redirectToRoute('client_listing');
         }
 
@@ -173,7 +179,7 @@ class ClientController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $client = $registry->getRepository(Client::class)->findOneBy(["id" => $id]);
-        $clientBooks = $registry->getRepository(History::class)->findBy(["client" => $client,"returned_date" => null]);
+        $clientBooks = $registry->getRepository(History::class)->findBy(["client" => $client, "returned_date" => null]);
         if (count($clientBooks) === 0) {
             $history = $registry->getRepository(History::class)->findBy(["client" => $client]);
             foreach ($history as $h) {

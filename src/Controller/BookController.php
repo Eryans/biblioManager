@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Repository\BookRepository;
+use Exception;
 
 class BookController extends AbstractController
 {
@@ -23,7 +24,7 @@ class BookController extends AbstractController
     {
         $this->bookRepository = $br;
     }
-    
+
     #[Route('/book', name: 'book')]
     public function index(): Response
     {
@@ -33,7 +34,7 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('/book/listing', name: 'book_listing')]
-    public function showBooks( Request $request): Response
+    public function showBooks(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $locale = $request->getLocale();
@@ -57,17 +58,24 @@ class BookController extends AbstractController
     public function createBook(TranslatorInterface $translator, Request $request, EntityManagerInterface $event): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $book = new Book();
 
         $form = $this->createForm(BookType::class, $book);
         $form->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
+        $this->addFlash("success", $translator->trans("Book added"));
         if ($form->isSubmitted() && $form->isValid()) {
-            $book = $form->getData();
-            $event->persist($book);
-            $event->flush();
+            try {
+                $book = $form->getData();
+                $event->persist($book);
+                $event->flush();
+            } catch (Exception $e) {
+                $this->addFlash("error", $translator->trans("Something went wrong")." : " . $e);
+            }
             return $this->redirectToRoute('book_listing');
         }
+
 
         return $this->renderForm('book/create.html.twig', [
             'title' => $translator->trans('Create book'),

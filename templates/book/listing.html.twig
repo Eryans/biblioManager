@@ -9,6 +9,16 @@
 {% endblock %}
 
 {% block body %}
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('error') %}
+		<div class="alert alert-danger">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<div class="container text-white p-4 border-5">
 		<h2>{{'Book'|trans}}</h2>
 		<table id="myTable" class="text-white" width="100%">
