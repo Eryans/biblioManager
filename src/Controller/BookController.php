@@ -64,9 +64,9 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class, $book);
         $form->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
-        $this->addFlash("success", $translator->trans("Book added"));
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $this->addFlash("success", $translator->trans("Book added"));
                 $book = $form->getData();
                 $event->persist($book);
                 $event->flush();
