@@ -60,7 +60,6 @@ class BookController extends AbstractController
         $book = new Book();
 
         $form = $this->createForm(BookType::class, $book);
-        $book->setAvailable(true);
         $form->add("submit", SubmitType::class, ["attr" => ["class" => "btn btn-primary"]]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -126,7 +125,7 @@ class BookController extends AbstractController
         return $this->render('book/details.html.twig', [
             'controller_name' => 'BookController',
             'book' => $book,
-            'clients' => $bookHistory
+            'history' => $bookHistory
         ]);
     }
 }

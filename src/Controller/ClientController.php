@@ -103,7 +103,6 @@ class ClientController extends AbstractController
         $history->setBorrowDate(new DateTime("now"));
         $history->setDueDate(new DateTime("now + ".$numOfDay."days"));
         $history->setUser($user);
-        //$book->setClient($client);
         $book->setQuantity($book->getQuantity() - 1);
         $client->addBook($book);
         $doctrine->persist($history);

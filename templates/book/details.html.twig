@@ -68,12 +68,15 @@
 					<th >{{"Due date"|trans}}</th>
 				</thead>
 				<tbody id="tableBody">
-					{% for client in clients %}
-						<tr id="tableBodyRow">
-							<td>{{client.getClient().getFirstName()}}</td>
-							<td>{{client.getClient().getLastName()}}</td>
-							<td >{{client.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
-							<td >{{client.getDueDate()|date("d-M-Y H:i:s")}}</td>
+					{% for hist in history %}
+						<tr id="tableBodyRow" class=                
+							{% if (date(hist.getReturnedDate()) > date(hist.getDueDate())) or ("now"|date > date(hist.getDueDate()) and not hist.getReturnedDate()) %}
+								"text-danger" 
+							{% endif %}>
+							<td>{{hist.getClient().getFirstName()}}</td>
+							<td>{{hist.getClient().getLastName()}}</td>
+							<td >{{hist.getBorrowDate()|date("d-M-Y H:i:s")}}</td>
+							<td >{{hist.getDueDate()|date("d-M-Y H:i:s")}}</td>
 						</tr>
 					{% endfor %}
 				</tbody>

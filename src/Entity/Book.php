@@ -32,8 +32,6 @@ class Book
     #[ORM\Column(type: 'boolean')]
     private $for_child;
 
-    #[ORM\Column(type: 'boolean')]
-    private $available;
 
     #[ORM\ManyToOne(targetEntity: client::class, inversedBy: 'books')]
     private $client;
@@ -118,17 +116,6 @@ class Book
         return $this;
     }
 
-    public function getAvailable(): ?bool
-    {
-        return $this->available;
-    }
-
-    public function setAvailable(bool $available): self
-    {
-        $this->available = $available;
-
-        return $this;
-    }
 
     public function getClient(): ?client
     {
