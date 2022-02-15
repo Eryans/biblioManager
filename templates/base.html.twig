@@ -10,7 +10,6 @@
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
-	    <link href="public/build/app.css" rel="stylesheet"/>
     {% endblock %}
 
     {% block javascripts %}
@@ -48,6 +47,7 @@
 .container {
     background: rgba(0, 0, 0, 0.6);
     border-radius: 5px;
+    padding:3em;
 }
 
 .navBg {

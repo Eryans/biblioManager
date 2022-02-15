@@ -39,14 +39,17 @@
         </thead>
         <tbody class="text-dark">
           {% for history in histories %}
-            <tr>
+            <tr class= 
+                {% if (date(history.getReturnedDate()) > date(history.getDueDate())) or ("now"|date > date(history.getDueDate()) and not history.getReturnedDate()) %}
+                  "text-danger" 
+                {% endif %}>
               <td>
                 {{ history.getBook.getTitle() }}
               </td>
               <td>
                 {{ history.getBook.getAuthor() }}
               </td>
-              <td>
+              <td >
                 {{ history.getBorrowDate()|date('d-M-Y H:i:s') }}
               </td>
               {% if history.getReturnedDate() %}

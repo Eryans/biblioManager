@@ -8,7 +8,7 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <section class="container-fluid d-flex flex-column align-items-center gap-5">
+    <section class="container d-flex flex-column align-items-center gap-5">
         <h2 class="text-white" >Connexion :</h2>
         <form action="{{ path('login') }}" class="d-flex flex-column display-6 text-white" method="post">
             <label for="username">Email:</label>

@@ -1,3 +1,28 @@
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate,
+.paginate_button {
+    color: white !important;
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+}
+
+.navBg {
+    background-color: rgba(100, 80, 50, 0.15);
+    box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+}
+
 body {
-    background-color: lightgray;
+    background-color: rgba(100, 80, 50, 1);
+    background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80");
+    background-size: 200vh;
+}
+
+#book_for_child {
+    transform: scale(2);
+    margin: .5em;
 }
