@@ -47,4 +47,32 @@ class BookRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllBooks()
+    {
+        $qb = $this->createQueryBuilder('b');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+    public function findBookById(int $id)
+    {
+        $qb = $this->createQueryBuilder('b')
+        ->where("b.id = :id")
+        ->setParameter("id",$id);
+        $query = $qb->getQuery();
+
+        return $query->setMaxResults(1)->getOneOrNullResult();
+    }
+/*     public function findBookById(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT * FROM book WHERE id = :id';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(["id" => $id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    } */
 }
